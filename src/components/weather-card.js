@@ -1,6 +1,27 @@
+import { weatherIcons } from "./icons.js";
+
 export function weatherCard(weatherData) {
   const container = document.createElement("div");
-  container.className = "weather-container flex justify-between bg-white gap-28 p-8 mt-8 rounded-2xl min-w-200 box-border";
+  container.className =
+    "weather-container flex justify-between bg-white gap-28 p-8 mt-8 rounded-2xl min-w-200 box-border";
+
+  const feelsLikeCelcius = Math.round(
+    (weatherData.days[0].feelslike - 32) * 5/9,
+  );
+
+  const tempMaxCelcius = Math.round(
+    (weatherData.days[0].tempmax - 32) * 5/9,
+  );
+  const tempMinCelcius = Math.round(
+    (weatherData.days[0].tempmin - 32) * 5/9,
+  );
+
+  const humidity = Math.round(weatherData.days[0].humidity);
+  const windSpeed = Math.round(weatherData.days[0].windspeed);
+  const pressure = Math.round(weatherData.days[0].pressure);
+
+  const iconSvg =
+    weatherIcons[weatherData.days[0].icon] ?? weatherIcons["cloudy"];
 
   container.innerHTML = `
   <div class="left flex flex-col justify-between gap-0.5">
@@ -8,56 +29,10 @@ export function weatherCard(weatherData) {
           <p class="timezone">${weatherData.timezone}</p>
           <p class="temperature text-7xl font-bold">${weatherData.days[0].temp}℃</p>
           <p class="condition text-2xl">${weatherData.days[0].conditions}</p>
-          <p class="feelslike">Feels like ${weatherData.days[0].feelslike}℃</p>
+          <p class="feelslike">Feels like ${feelsLikeCelcius}℃</p>
         </div>
         <div class="mid flex items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 128 128"
-            width="200px"
-            height="200px"
-          >
-            <g id="clear-day__clear-day">
-              <g id="clear-day__Sun">
-                <circle
-                  id="clear-day__Core"
-                  cx="64"
-                  cy="64"
-                  r="19.5"
-                  fill="url(#clear-day__paint0_linear_1802_5186)"
-                  stroke="#f8af18"
-                />
-                <g id="clear-day__Rays">
-                  <path
-                    fill="#f8af18"
-                    d="M61 19a3 3 0 1 1 6 0v14a3 3 0 0 1-6 0zM93.699 30.059A3 3 0 1 1 97.94 34.3l-9.9 9.9a3 3 0 1 1-4.242-4.243zM109 61a3 3 0 1 1 0 6H95a3 3 0 1 1 0-6zM97.941 93.699a3 3 0 1 1-4.243 4.242l-9.899-9.9a3 3 0 1 1 4.243-4.242zM61 95a3 3 0 1 1 6 0v14a3 3 0 1 1-6 0zM39.958 83.799a3 3 0 1 1 4.243 4.243l-9.9 9.9a3 3 0 1 1-4.242-4.243zM33 61a3 3 0 1 1 0 6H19a3 3 0 0 1 0-6zM44.201 39.958a3 3 0 1 1-4.243 4.243l-9.9-9.9a3 3 0 1 1 4.243-4.242z"
-                  />
-                  <animateTransform
-                    attributeName="transform"
-                    begin="0s"
-                    dur="6s"
-                    repeatCount="indefinite"
-                    type="rotate"
-                    values="0 64.0 64.0;360 64.0 64.0"
-                  />
-                </g>
-              </g>
-            </g>
-            <defs>
-              <linearGradient
-                id="clear-day__paint0_linear_1802_5186"
-                x1="64"
-                x2="64"
-                y1="44"
-                y2="84"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stop-color="#fbbf24" />
-                <stop offset="1" stop-color="#f8af18" />
-              </linearGradient>
-            </defs>
-          </svg>
+          ${iconSvg}
         </div>
         <div class="right flex flex-col gap-1">
           <div class="temperatures flex items-start">
@@ -130,7 +105,7 @@ export function weatherCard(weatherData) {
               </defs>
             </svg>
             <div>
-              <p class="font-semibold">30℃ / 24℃</p>
+              <p class="font-semibold">${tempMaxCelcius}℃ / ${tempMinCelcius}℃</p>
               <p>High / Low</p>
             </div>
           </div>
@@ -140,7 +115,7 @@ export function weatherCard(weatherData) {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 128 128"
-              widht="50px"
+              width="50px"
               height="50px"
             >
               <g id="humidity__humidity">
@@ -187,7 +162,7 @@ export function weatherCard(weatherData) {
               </defs>
             </svg>
             <div>
-              <p class="font-semibold">70%</p>
+              <p class="font-semibold">${humidity}%</p>
               <p>Humidity</p>
             </div>
           </div>
@@ -240,7 +215,7 @@ export function weatherCard(weatherData) {
               </g>
             </svg>
             <div>
-              <p class="font-semibold">12 Km/h</p>
+              <p class="font-semibold">${windSpeed} Km/h</p>
               <p>Wind</p>
             </div>
           </div>
@@ -250,7 +225,7 @@ export function weatherCard(weatherData) {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 128 128"
-              widht="50px"
+              width="50px"
               height="50px"
             >
               <g id="barometer__barometer">
@@ -383,7 +358,7 @@ export function weatherCard(weatherData) {
               </defs>
             </svg>
             <div>
-              <p class="font-semibold">1010 hPa</p>
+              <p class="font-semibold">${pressure} hPa</p>
               <p>Pressure</p>
             </div>
           </div>

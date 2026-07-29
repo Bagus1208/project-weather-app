@@ -11,7 +11,7 @@ export function forecastCard(forecastData) {
   container.appendChild(title);
 
   const forecastWrapper = document.createElement("div");
-  forecastWrapper.className = "flex mx-8 gap-8 justify-between";
+  forecastWrapper.className = "flex mx-8 gap-8 justify-between items-start";
   container.appendChild(forecastWrapper);
 
   forecastData.forEach((day, index) => {
