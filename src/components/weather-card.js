@@ -3,7 +3,7 @@ import { weatherIcons } from "./icons.js";
 export function weatherCard(weatherData) {
   const container = document.createElement("div");
   container.className =
-    "weather-container flex justify-between bg-white gap-28 p-8 mt-8 rounded-2xl min-w-200 box-border";
+    "weather-container flex justify-between bg-white gap-25 p-8 mt-8 rounded-2xl min-w-200 box-border";
 
   const feelsLikeCelcius = Math.round(
     (weatherData.days[0].feelslike - 32) * 5/9,
